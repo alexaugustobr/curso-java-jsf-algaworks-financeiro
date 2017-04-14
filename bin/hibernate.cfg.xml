@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://portfoliodoalex.ddns.net/cursojsf</property>
+		<property name="hibernate.connection.username">cursojsf</property>
+		<property name="hibernate.connection.password">cursojsf</property>
+
+		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>		
+		<property name="show_sql">false</property><!-- exibe os comandos SQL no console, desabilite se nao for em produção -->
+		<property name="format_sql">false</property>
+		
+		<mapping class="com.algaworks.cursojsf2.financeiro.model.Pessoa"/>
+		<mapping class="com.algaworks.cursojsf2.financeiro.model.Lancamento"/>
+	</session-factory>
+</hibernate-configuration>
