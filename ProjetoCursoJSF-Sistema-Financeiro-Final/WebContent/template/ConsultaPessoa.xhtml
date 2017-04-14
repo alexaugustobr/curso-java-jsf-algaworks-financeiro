@@ -1,0 +1,143 @@
+<ui:composition template="/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<f:metadata>
+		<f:viewParam 
+			name="pagina" 
+			value="#{consultaPessoaBean.pagina}" />
+		<f:event 
+			type="preRenderView" 
+			listener="#{consultaPessoaBean.fEventOnLoad}" />
+	</f:metadata>
+		<h:outputStylesheet 
+			library="css" 
+			name="consulta-lancamentos.css" />
+	<ui:define 
+		name="titulo">
+		Consulta Pessoas
+	</ui:define>
+
+	<ui:define 
+		name="conteudo">
+		<h1>Consulta Pessoas</h1>
+		<h:form 
+			id="frm">
+			<h:messages 
+				id="msg" 
+				showDetail="false" 
+				showSummary="true"
+				styleClass="form-messages" 
+				errorClass="error" 
+				infoClass="info" />
+			<h:button 
+				value="Novo Lançamento" 
+				outcome="CadastroLancamento" 
+				rendered="#{request.isUserInRole('cadastro')}"/>
+			<h:button 
+				value="Nova Pessoa" 
+				outcome="CadastroPessoa" 
+				rendered="#{request.isUserInRole('cadastro')}"/>
+
+			<h:dataTable
+				id="tabela" 
+				var="pessoa"
+				value="#{consultaPessoaBean.pessoas}" 
+				width="100%" 
+				styleClass="grid"
+				headerClass="cabecalho" 
+				rowClasses="cor-sim, cor-nao"
+				columnClasses="acoes, nome">
+				
+			<h:column 
+				rendered="#{request.isUserInRole('cadastro')}">
+				<f:facet 
+					name="header">
+					Ações
+				</f:facet>
+				<!-- h link quando á algum outcome -->
+					<h:link 
+						outcome="CadastroPessoa">
+						<h:graphicImage 
+							value="/imagens/editar.png" />
+						<!-- variavel local lancamento -->
+						<f:param 
+							name="codigo" 
+							value="#{pessoa.codigo}" />
+					</h:link>
+					<!-- h link quando nao á outcome direto -->
+					<h:commandLink 
+						action="#{consultaPessoaBean.excluir}">
+						<h:graphicImage 
+							value="/imagens/excluir.png" />
+						<f:setPropertyActionListener 
+							value="#{pessoa}"
+							target="#{consultaPessoaBean.pessoaSelecionada}" />
+						<f:ajax 
+							execute="@form" 
+							render="@all" />
+					</h:commandLink>
+				</h:column>
+				<h:column>
+					<f:facet 
+						name="header">
+						Nome
+				</f:facet>
+
+					<h:outputText 
+						value="#{pessoa.nome}" />
+				</h:column>
+
+				
+			</h:dataTable>
+			<!-- poderia ter usado h link 
+			mas foi usando command 
+			pois é feita uma verificação 
+			se a proxima pagina existe-->
+			<h:commandButton 
+				value="Pagina Anteriror"
+				action="#{consultaPessoaBean.btnPaginaAnterior}">
+				<f:ajax 
+					execute="@form" 
+					render="@all" />
+			</h:commandButton>
+			
+			<h:outputLabel 
+				value=" | " />
+			<h:outputLabel 
+				value="Pagina" />
+			<!-- ao apertar ENTER 
+			vai pro proximo botao 
+			causando lançamento do envento -->
+			<h:inputText 
+				id="editNumeroPagina" 
+				label="Numero da pagina"
+				valueChangeListener="#{consultaPessoaBean.numPaginaModificada}"
+				immediate="true" 
+				size="3" 
+				value="#{consultaPessoaBean.pagina}" />
+			<h:commandButton 
+				value="Carregar Pagina">
+				<f:ajax 
+					execute="@form"
+					render="frm:tabela frm:editNumeroPagina frm:msg" />
+			</h:commandButton>
+			<h:outputLabel 
+				value=" | " />
+			<h:commandButton 
+				value="Proxima Pagina"
+				action="#{consultaPessoaBean.btnProximaPagina}">
+				<f:ajax 
+					execute="@form"
+					render="frm:tabela frm:editNumeroPagina frm:msg" />
+			</h:commandButton>
+
+
+		</h:form>
+		
+	</ui:define>
+</ui:composition>
+
+

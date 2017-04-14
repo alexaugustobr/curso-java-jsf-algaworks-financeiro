@@ -1,0 +1,85 @@
+td.tipo { 
+	width: 20px;
+	text-align: center;
+}
+
+td.pessoa {
+	width: 200px;
+}
+
+td.descricao {
+}
+
+td.valor { 
+	width: 100px;
+	text-align: center;
+}
+
+td.vencimento { 
+	width: 100px;
+	text-align: center;
+}
+
+td.pagamento { 
+	width: 100px;
+	text-align: center;
+}
+
+td.situacao { 
+	width: 80px;
+	text-align: center;
+}
+
+td.acoes { 
+	width: 40px;
+	text-align: center;
+}
+
+.grid .receita {
+	color: #0000ff;
+}
+
+.grid .despesa {
+	color: #c23030;
+}
+.grid {
+	border: 1px solid #666666;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.grid td, .grid th {
+	padding: 3px;
+}
+
+.grid .cabecalho {
+	text-align: center;
+	font-weight: bold;
+	color: white;
+	background-color: #666666;
+}
+
+.grid .cor-sim {
+	background-color: #dbdbdb;
+}
+
+.grid .cor-nao {
+	background-color: #e6e6e6;
+}
+
+.form-grid {
+	background-color: #f2f2f2;
+	border-radius: 8px;
+	border: 1px solid #cccccc;
+	margin-top: 8px;
+}
+
+.form-grid .label {
+	font-weight: bold;
+	text-align: right;
+	padding: 0px 5px;
+}
+
+.form-grid .campo {
+	padding-right: 5px;
+}

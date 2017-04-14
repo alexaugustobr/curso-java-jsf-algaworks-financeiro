@@ -1,0 +1,146 @@
+<ui:composition template="/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:define name="titulo">
+		Consulta Pessoas
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h1>Consulta Pessoas</h1>
+		<h:form id="frm">
+			<h:messages id="msg" showDetail="false" showSummary="true"
+				styleClass="form-messages" errorClass="error" infoClass="info" />
+			<h:button value="Novo Lançamento" outcome="CadastroLancamento" rendered="#{request.isUserInRole('cadastro')}"/>
+			<h:button value="Nova Pessoa" outcome="CadastroPessoa" rendered="#{request.isUserInRole('cadastro')}"/>
+
+
+			<h:dataTable id="tabela" var="pessoa"
+				value="#{consultaPessoaBean.pessoas}" width="100%" styleClass="grid"
+				headerClass="cabecalho" rowClasses="cor-sim, cor-nao"
+				columnClasses="nome, acoes">
+				
+			<h:column rendered="#{request.isUserInRole('cadastro')}">
+					<f:facet name="header">
+						Ações
+					</f:facet>
+					<h:graphicImage value="/imagens/editar.png" />
+					<h:commandLink action="#{consultaPessoaBean.excluir}">
+						<h:graphicImage value="/imagens/excluir.png" />
+						<f:setPropertyActionListener value="#{pessoa}"
+							target="#{consultaPessoaBean.pessoaSelecionada}" />
+						<f:ajax execute="@form" render="@all" />
+					</h:commandLink>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						Nome
+				</f:facet>
+
+					<h:outputText value="#{pessoa.nome}" />
+				</h:column>
+
+				
+			</h:dataTable>
+
+
+			<h:outputLabel value="Numero da pagina" />
+			<!-- ao apertar enter vai pro proximo botao causando lançamento do envento -->
+			<h:inputText id="editNumeroPagina" label="Numero da pagina"
+				valueChangeListener="#{consultaPessoaBean.numPaginaModificada}"
+				immediate="true" size="3" value="#{consultaPessoaBean.pagina}" />
+			<h:commandButton value="Carregar Pagina"
+				action="#{consultaPessoaBean.inicializar}">
+				<f:ajax execute="@form" render="@all" />
+			</h:commandButton>
+			<br />
+
+
+
+			<h:outputLabel value="Via componente h:commandButton" />
+			<br />
+			<h:commandButton value="Pagina Anteriror"
+				action="#{consultaPessoaBean.btnPaginaAnterior}">
+				<f:ajax execute="@form"
+					render="frm:tabela frm:editNumeroPagina frm:msg" />
+			</h:commandButton>
+
+			<h:outputLabel value=" | " />
+
+			<h:commandButton value="Proxima Pagina"
+				action="#{consultaPessoaBean.btnProximaPagina}">
+				<f:ajax execute="@form"
+					render="frm:tabela frm:editNumeroPagina frm:msg" />
+			</h:commandButton>
+			<br />
+
+
+
+
+
+			<h:outputLabel
+				value="Via componente h:commandButton com redirect via BEAN" />
+			<br />
+			<h:commandButton value="Pagina Anteriror"
+				action="#{consultaPessoaBean.btnPaginaAnteriorRirect}">
+				<f:ajax execute="@form" render="@all" />
+			</h:commandButton>
+
+			<h:outputLabel value=" | " />
+
+			<h:commandButton value="Proxima Pagina"
+				action="#{consultaPessoaBean.btnProximaPaginaRedirect}">
+				<f:ajax execute="@form" render="@all" />
+			</h:commandButton>
+
+
+
+
+
+			<br />
+			<h:outputLabel
+				value="Via componente h:link com redirect de variavel local" />
+			<br />
+
+
+			<h:link value="PAGINA ANTERIOR" outcome="ConsultaPessoa">
+
+				<!-- variavel local lancamento -->
+				<f:param name="pagina" value="#{consultaPessoaBean.pagina-1}" />
+			</h:link>
+			<h:outputLabel value=" | " />
+			<h:link value="PROXIMA PAGINA" outcome="ConsultaPessoa">
+
+				<!-- variavel local lancamento -->
+				<f:param name="pagina" value="#{consultaPessoaBean.pagina+1}" />
+
+			</h:link>
+
+			<br />
+			<h:outputLabel value="Via componente h:commandLink" />
+			<br />
+			<h:commandLink value="Pagina Anterior"
+				action="#{consultaPessoaBean.paginaAnterior}">
+				<f:ajax execute="@form" render="@all" />
+			</h:commandLink>
+			<h:outputLabel value=" | " />
+			<h:commandLink value="Proxima pagina"
+				action="#{consultaPessoaBean.paginaProxima}">
+				<f:ajax execute="@form" render="@all" />
+			</h:commandLink>
+
+
+
+
+		</h:form>
+		<f:metadata>
+			<f:viewParam name="pagina" value="#{consultaPessoaBean.pagina}" />
+			<f:event type="preRenderView" listener="#{consultaPessoaBean.onLoad}" />
+		</f:metadata>
+		<h:outputStylesheet library="css" name="consulta-lancamentos.css" />
+	</ui:define>
+</ui:composition>
+
+

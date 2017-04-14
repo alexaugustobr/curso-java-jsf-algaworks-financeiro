@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<h:outputStylesheet 
+	library="css" 
+	name="tabela.css"/>
+<h:outputScript 
+	library="js" 
+	name="tabela.js"/>
+<title>Testes Ajax</title>
+</h:head>
+<h:body>
+	<h:form id="frm">
+		<h:outputLabel value="Nome:"/>
+		<h:inputText id="descricao" value="#{testeAjaxBean.descricao}">
+			<!-- keyup ao precionar uma tecla  -->
+			<!-- render= atualizar componente exemplo forma:componente ou @form-->
+			<!-- execute=autaliza componente ou forma no ciclo de vida jsf do servidor exemplo forma:componente  @this-->
+			<f:ajax event="keyup" render="frm:saida" execute="@this"/>
+		</h:inputText>
+		<br/>
+		<h:outputText id="saida" value="#{testeAjaxBean.descricao}"/>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,50 @@
+<ui:composition template="/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:define name="titulo">
+		#{cadastroPessoaBean.editando ? msg.editing_person : msg.new_person}
+	</ui:define>
+
+	<ui:define name="conteudo">
+	
+		<f:metadata>
+			<f:viewParam 
+				name="codigo"
+				value="#{cadastroPessoaBean.pessoa}" />
+		</f:metadata>
+
+		<h1>#{cadastroPessoaBean.editando ? msg.editing_person : msg.new_person}</h1>
+
+		<h:form id="frm">
+
+			<!-- action="#{cadastroLancamentoBean.init}" -->
+			<h:button value="Novo Lançamento" outcome="CadastroLancamento" />
+			<h:button value="Nova Pessoa" outcome="CadastroPessoa" />
+
+			<h:messages showDetail="false" showSummary="true"
+				styleClass="form-messages" errorClass="error" infoClass="info" />
+
+			<h:panelGrid columns="2" styleClass="form-grid"
+				columnClasses="label, campo">
+
+				<h:outputLabel value="Nome" />
+				<!-- o campo é do tipo pessoa.nome String, logo o validador deve se do tipo String -->
+				<h:inputText size="60" value="#{cadastroPessoaBean.pessoa.nome}"
+					validatorMessage="Só é permitido caracteres de A a Z no campo Nome."
+					required="true" label="Nome">
+					<!-- validador apenas aceita caracteres de a a z   -->
+					<f:validateRegex pattern="[a-zA-Z\s]+" />
+					<f:validator validatorId="com.algaworks.PessoaNome" />
+				</h:inputText>
+
+				<h:outputLabel />
+				<h:commandButton value="Cadastrar"
+					action="#{cadastroPessoaBean.cadastrar}" />
+			</h:panelGrid>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

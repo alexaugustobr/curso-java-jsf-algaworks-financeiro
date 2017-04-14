@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- template -->
+
+<!-- Imports -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet library="css" name="sistema.css" />
+	<title>
+		<ui:insert name="titulo">Financeiro</ui:insert>
+	</title>
+</h:head>
+<h:body>
+	<div id="header">
+		<!-- ui insert define area -->
+		<ui:insert name="cabecalho">
+			<!-- padrao deste conteudo é cabecalho se passar um novo conteudo este é subistituido -->
+			<!-- ui:include insere pedaco de template de pagina -->
+			<ui:include src="/template/Cabecalho.xhtml" />
+			
+		</ui:insert>
+	</div>
+
+
+	<div id="content">
+		<ui:insert name="conteudo" />
+	</div>
+
+
+	<div id="footer">
+		<ui:insert name="rodape">
+			<!-- padrao deste conteudo é cabecalho se passar um novo conteudo este é subistituido -->
+			<ui:include src="/template/Rodape.xhtml" />
+		</ui:insert>
+	</div>
+</h:body>
+</html>
